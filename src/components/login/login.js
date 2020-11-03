@@ -8,6 +8,7 @@ const Login = () => {
     const [data, setData] = useState({room: "", userName: ""});
     const [error, setError] = useState({room: false, userName: false});
 
+
     const onRoomChange = (e) => {
         if(!e.target.value.trim()) setError({...error, room: true});
         else setError({...error, room: false});
@@ -40,7 +41,6 @@ const Login = () => {
                 })
             })
         }else {
-            console.log(values)
             socket.emit("ROOM_JOIN", values);
         }
     }
