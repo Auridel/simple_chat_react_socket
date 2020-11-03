@@ -7,6 +7,11 @@ app.use(express.json({extended: true}));
 
 const PORT  = process.env.PORT || 4000;
 
+io.on("connection", (socket) => {
+    console.log(socket);
+    console.log("connected");
+})
+
 server.listen(PORT, (err) => {
     if(err) throw Error(err);
     else {
