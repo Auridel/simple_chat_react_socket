@@ -20,7 +20,6 @@ const Login = () => {
     const onUserNameChange = (e) => {
         if(!e.target.value.trim()) setError({...error, userName: true});
         else setError({...error, userName: false});
-        console.log(error.userName)
         setData((prev) => {
             return {
                 ...prev, userName: e.target.value
@@ -41,6 +40,7 @@ const Login = () => {
                 })
             })
         }else {
+            console.log(values)
             socket.emit("ROOM_JOIN", values);
         }
     }
@@ -58,7 +58,9 @@ const Login = () => {
                 <label htmlFor="user" className="login__label">Username</label>
                 <InputField value={data.userName} inputId="user" error={error.userName} onChange={onUserNameChange} showError={() => onError(error.userName)}/>
             </div>
-            <button className="login__submit">Enter Chat</button>
+            <button
+                onClick={() => sendData(data)}
+                className="login__submit">Enter Chat</button>
         </section>
     )
 };

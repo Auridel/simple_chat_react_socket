@@ -9,7 +9,9 @@ const PORT  = process.env.PORT || 4000;
 
 io.on("connection", (socket) => {
     console.log("connected");
-    console.log(socket);
+    socket.on("ROOM_JOIN", ({room, userName}) => {
+        console.log(userName)
+    })
 })
 
 server.listen(PORT, (err) => {
