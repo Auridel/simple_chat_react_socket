@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const { v4: uuidv4 } = require('uuid');
 
 app.use(express.json({extended: true}));
 
@@ -11,7 +12,6 @@ const db = new Map();
 io.on("connection", (socket) => {
     console.log("connected");
     socket.on("ROOM_JOIN", ({room, userName}) => {
-        console.log(userName)
         if(!db.has(room)){
             db.set(room,
                     new Map([
@@ -24,6 +24,16 @@ io.on("connection", (socket) => {
         socket.join(room);
         const users = Array.from(db.get(room).get("users").values());
         io.to(room).emit("ROOM_JOINED", {room, users})
+    })
+
+    socket.on("ADD_MESSAGE", ({msg, room}) => {
+        const user = Object.fromEntries(db.get(room).get("users"))[socket.id];
+        db.get(room).get("messages").push({
+            user,
+            msg,
+            id: uuidv4()
+        })
+        io.to(room).emit("NEW_MESSAGE", db.get(room).get("messages"))
     })
 
     socket.on("disconnect", () => {

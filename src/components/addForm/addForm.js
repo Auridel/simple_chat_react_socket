@@ -1,14 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
+import socket from "../../socket";
+import {connect} from "react-redux";
 
 import "./addForm.scss";
 
-const AddForm = () => {
+const AddForm = ({room}) => {
+    const [msg, setMsg] = useState("");
+
     return (
         <div className="add-form">
-            <textarea className="add-form__input"/>
-            <button className="add-form__btn">Send</button>
+            <textarea
+                onChange={(e) => {
+                    setMsg(e.target.value)
+                }}
+                value={msg}
+                className="add-form__input"/>
+            <button
+                onClick={() => {
+                    const obj = {msg, room};
+                    socket.emit("ADD_MESSAGE", obj)
+                }}
+                className="add-form__btn">Send</button>
         </div>
     )
 };
 
-export default AddForm;
+const mapStateToProps = (state) => {
+    return {
+        room: state.room
+    }
+}
+
+export default connect(mapStateToProps)(AddForm);

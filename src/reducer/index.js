@@ -23,6 +23,12 @@ const reducer = (state = initialState, action) => {
                 users: action.payload
             }
         }
+        case "UPDATE_MESSAGES": {
+            return {
+                ...state,
+                messages: [...action.payload]
+            }
+        }
         default: return state;
     }
 };

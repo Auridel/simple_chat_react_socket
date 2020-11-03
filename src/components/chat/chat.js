@@ -1,5 +1,5 @@
 import React from "react";
-import Mesages from "../messages/messages";
+import Messages from "../messages/messages";
 import AddForm from "../addForm/addForm";
 import Users from "../users/users";
 
@@ -10,7 +10,7 @@ const Chat = () => {
         <section className="chat">
             <Users/>
             <div className="chat__wrapper">
-                <Mesages/>
+                <Messages/>
                 <AddForm/>
             </div>
         </section>
