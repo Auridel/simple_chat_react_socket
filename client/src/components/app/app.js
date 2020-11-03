@@ -5,7 +5,7 @@ import "./app.scss";
 import Chat from "../chat/chat";
 
 const App = () => {
-    const logged = true;
+    const logged = false;
     return (
         <>
             {logged? <Chat/> : <Login/>}

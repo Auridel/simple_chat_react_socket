@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import InputField from "../inputField/inputField";
+import socket from "../../socket";
 
 import "./login.scss";
 
@@ -29,6 +30,19 @@ const Login = () => {
     const onError = (error) => {
         if(error) return "Enter correct value";
         else return "";
+    }
+
+    const sendData = (values) => {
+        if(!values.room.trim() || !values.userName.trim()){
+            const keys = Object.keys(values);
+            keys.forEach(key => {
+                if(!values[key].trim()) setError((prev) => {
+                    return {...prev, [key]: true}
+                })
+            })
+        }else {
+            socket.emit("ROOM_JOIN", values);
+        }
     }
 
 
