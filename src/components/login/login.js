@@ -9,13 +9,15 @@ const Login = () => {
     const [error, setError] = useState({room: false, userName: false});
     const [alert, setAlert] = useState(false);
 
+
     useEffect(() => {
-        socket.on("USER_EXISTS", onExists)
-    })
+        socket.on("USER_EXISTS", onExists);
+    }, [])
 
     const onExists = () => {
         setAlert(true);
     }
+
 
     const onRoomChange = (e) => {
         if(!e.target.value.trim()) setError({...error, room: true});

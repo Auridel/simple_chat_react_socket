@@ -18,7 +18,8 @@ const AddForm = ({room}) => {
             <button
                 onClick={() => {
                     const obj = {msg, room};
-                    socket.emit("ADD_MESSAGE", obj)
+                    if(msg.trim()) socket.emit("ADD_MESSAGE", obj);
+                    setMsg("");
                 }}
                 className="add-form__btn">Send</button>
         </div>

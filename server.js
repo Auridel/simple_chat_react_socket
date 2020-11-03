@@ -25,8 +25,9 @@ io.on("connection", (socket) => {
         else {
             db.get(room).get("users").set(socket.id, userName);
             socket.join(room);
+            io.to(socket.id).emit("SET_USERNAME", userName);
             const users = Array.from(db.get(room).get("users").values());
-            io.to(room).emit("ROOM_JOINED", {room, users, userName})
+            io.to(room).emit("ROOM_JOINED", {room, users})
         }
     })
 

@@ -9,14 +9,13 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "ROOM_JOINED": {
-            const {room, users, userName} = action.payload;
+            const {room, users} = action.payload;
             console.log(action.payload)
             return {
                 ...state,
                 joined: true,
                 users: users,
-                room: room,
-                userName: userName
+                room: room
             }
         }
         case "UPDATE_USERS": {
@@ -29,6 +28,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 messages: [...state.messages, action.payload]
+            }
+        }
+        case "SET_USERNAME": {
+            return {
+                ...state,
+                userName: action.payload
             }
         }
         default: return state;

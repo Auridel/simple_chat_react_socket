@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {connect} from "react-redux";
 import socket from "../../socket";
 import {UPDATE_MESSAGES} from "../../actions";
@@ -6,6 +6,7 @@ import {UPDATE_MESSAGES} from "../../actions";
 import "./messages.scss";
 
 const Messages = ({messages, UPDATE_MESSAGES, userName}) => {
+    const messagesContainerRef = useRef();
 
     useEffect(() => {
         socket.on("NEW_MESSAGE", updateMessages)
@@ -13,10 +14,11 @@ const Messages = ({messages, UPDATE_MESSAGES, userName}) => {
 
     const updateMessages = (msg) => {
         UPDATE_MESSAGES(msg);
+        messagesContainerRef.current.scrollTo(0, messagesContainerRef.current.scrollHeight);
     }
 
     return (
-        <div className="chat__messages-container">
+        <div ref={messagesContainerRef} className="chat__messages-container">
             <ul className="chat__messages-list">
                 {messages.map(item =>
                     <li key={item.id}

@@ -3,18 +3,22 @@ import Login from "../login/login";
 import Chat from "../chat/chat";
 import socket from "../../socket";
 import {connect} from "react-redux";
-import {ROOM_JOINED} from "../../actions";
+import {ROOM_JOINED, SET_USERNAME} from "../../actions";
 
 import "./app.scss";
 
-const App = ({ROOM_JOINED, joined}) => {
+const App = ({ROOM_JOINED, joined, SET_USERNAME}) => {
 
     useEffect(() => {
         socket.on("ROOM_JOINED", onJoin);
+        socket.on("SET_USERNAME", onSetUsername)
     }, [])
 
-    const onJoin = ({room, users, userName}) => {
-        ROOM_JOINED(room, users, userName);
+    const onJoin = ({room, users}) => {
+        ROOM_JOINED(room, users);
+    }
+    const onSetUsername = (name) => {
+        SET_USERNAME(name);
     }
 
 
@@ -31,7 +35,8 @@ const mapStateToProps = (state) => {
     }
 }
 const mapDispatchToProps = {
-    ROOM_JOINED
+    ROOM_JOINED,
+    SET_USERNAME
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
