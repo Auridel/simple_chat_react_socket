@@ -1,7 +1,7 @@
-const ROOM_JOINED = (room, users) => {
+const ROOM_JOINED = (room, users, userName) => {
     return {
         type: "ROOM_JOINED",
-        payload: {room, users}
+        payload: {room, users, userName}
     }
 }
 
@@ -12,10 +12,10 @@ const UPDATE_USERS = (users) => {
     }
 }
 
-const UPDATE_MESSAGES = (messages) => {
+const UPDATE_MESSAGES = (message) => {
     return {
         type: "UPDATE_MESSAGES",
-        payload: messages
+        payload: message
     }
 }
 

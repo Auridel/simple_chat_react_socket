@@ -7,7 +7,15 @@ import "./login.scss";
 const Login = () => {
     const [data, setData] = useState({room: "", userName: ""});
     const [error, setError] = useState({room: false, userName: false});
+    const [alert, setAlert] = useState(false);
 
+    useEffect(() => {
+        socket.on("USER_EXISTS", onExists)
+    })
+
+    const onExists = () => {
+        setAlert(true);
+    }
 
     const onRoomChange = (e) => {
         if(!e.target.value.trim()) setError({...error, room: true});
@@ -61,6 +69,7 @@ const Login = () => {
             <button
                 onClick={() => sendData(data)}
                 className="login__submit">Enter Chat</button>
+            {alert? <span className="login__alert">User already exists</span> : ""}
         </section>
     )
 };

@@ -13,8 +13,9 @@
   background-color: #FFF;
 }
 .chat__message{
+  position: relative;
   display: inline-block;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   padding: 10px 10px;
 
   border-radius: 7px;
@@ -25,4 +26,12 @@
     align-self: flex-end;
     background-color: rgb(214, 234, 245);
   }
+}
+.chat__message-user{
+  position: absolute;
+  left: 0;
+  bottom: -17px;
+
+  font-size: 12px;
+  color: #b1b1b1;
 }

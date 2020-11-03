@@ -17,7 +17,7 @@ const Users = ({users, room, UPDATE_USERS}) => {
 
     return (
         <aside className="users">
-            <p className="users__room"><span className="users__strong">Room:</span>{room}</p>
+            <p className="users__room"><span className="users__strong">Room: </span>{room}</p>
             <ul className="users__list">
                 {users.map(item => <li key={item} className="users__list-item">{item}</li>)}
             </ul>

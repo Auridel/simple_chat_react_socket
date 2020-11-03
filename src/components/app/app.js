@@ -10,11 +10,11 @@ import "./app.scss";
 const App = ({ROOM_JOINED, joined}) => {
 
     useEffect(() => {
-        socket.on("ROOM_JOINED", onJoin)
+        socket.on("ROOM_JOINED", onJoin);
     }, [])
 
-    const onJoin = ({room, users}) => {
-        ROOM_JOINED(room, users);
+    const onJoin = ({room, users, userName}) => {
+        ROOM_JOINED(room, users, userName);
     }
 
 

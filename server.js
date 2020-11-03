@@ -20,20 +20,25 @@ io.on("connection", (socket) => {
                     ])
             );
         }
-        db.get(room).get("users").set(socket.id, userName);
-        socket.join(room);
-        const users = Array.from(db.get(room).get("users").values());
-        io.to(room).emit("ROOM_JOINED", {room, users})
+        const userList = Array.from(db.get(room).get("users").values());
+        if(userList.find(item => item === userName)) io.to(socket.id).emit("USER_EXISTS");
+        else {
+            db.get(room).get("users").set(socket.id, userName);
+            socket.join(room);
+            const users = Array.from(db.get(room).get("users").values());
+            io.to(room).emit("ROOM_JOINED", {room, users, userName})
+        }
     })
 
     socket.on("ADD_MESSAGE", ({msg, room}) => {
         const user = Object.fromEntries(db.get(room).get("users"))[socket.id];
-        db.get(room).get("messages").push({
+        const newMsg = {
             user,
             msg,
             id: uuidv4()
-        })
-        io.to(room).emit("NEW_MESSAGE", db.get(room).get("messages"))
+        };
+        db.get(room).get("messages").push(newMsg)
+        io.to(room).emit("NEW_MESSAGE", newMsg);
     })
 
     socket.on("disconnect", () => {
